@@ -1,0 +1,912 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>L'Atelier Botanique — Fleurs & Déco</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  <style>
+    /* ----- RESET & VARIABLES ----- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --primary: #3a3530;
+      --primary-light: #5a4f48;
+      --accent: #b4846c;
+      --accent-light: #dbb8a8;
+      --bg-light: #fbf8f4;
+      --bg-card: #ffffff;
+      --text-dark: #2c2a28;
+      --text-muted: #6b605a;
+      --border-color: #e8e0d9;
+      --shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+      --radius: 24px;
+      --transition: 0.25s ease;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+      background-color: var(--bg-light);
+      color: var(--text-dark);
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    /* ----- HEADER ----- */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 0;
+      border-bottom: 1px solid var(--border-color);
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .logo {
+      font-size: 1.8rem;
+      font-weight: 300;
+      letter-spacing: 1px;
+    }
+    .logo i {
+      color: var(--accent);
+      margin-right: 6px;
+    }
+    .logo span {
+      font-weight: 500;
+      color: var(--accent);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 28px;
+      font-weight: 400;
+      color: var(--primary-light);
+    }
+    .nav-links a {
+      border-bottom: 2px solid transparent;
+      padding-bottom: 4px;
+      transition: var(--transition);
+    }
+    .nav-links a:hover {
+      border-bottom-color: var(--accent);
+      color: var(--text-dark);
+    }
+
+    .header-icons {
+      display: flex;
+      gap: 18px;
+      font-size: 1.2rem;
+      color: var(--primary-light);
+    }
+    .header-icons i {
+      cursor: default;
+      transition: var(--transition);
+    }
+    .header-icons i:hover {
+      color: var(--accent);
+    }
+
+    /* ----- HERO ----- */
+    .hero {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 40px;
+      padding: 40px 0 30px;
+    }
+
+    .hero-text {
+      flex: 1 1 380px;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: var(--accent-light);
+      color: var(--primary);
+      padding: 4px 18px;
+      border-radius: 40px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+
+    .hero-text h1 {
+      font-size: 3.2rem;
+      font-weight: 300;
+      line-height: 1.15;
+      margin-bottom: 12px;
+    }
+    .hero-text h1 i {
+      color: var(--accent);
+      font-size: 2.6rem;
+    }
+
+    .hero-text p {
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      max-width: 480px;
+      margin-bottom: 24px;
+    }
+
+    .hero-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+    .btn {
+      padding: 12px 32px;
+      border-radius: 40px;
+      font-weight: 500;
+      border: none;
+      cursor: pointer;
+      transition: var(--transition);
+      font-size: 0.95rem;
+      display: inline-block;
+      text-align: center;
+    }
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+    }
+    .btn-primary:hover {
+      background: #1f1b18;
+      transform: scale(1.02);
+    }
+    .btn-secondary {
+      background: transparent;
+      color: var(--primary);
+      border: 1px solid var(--border-color);
+    }
+    .btn-secondary:hover {
+      background: #f0ebe6;
+      border-color: var(--accent);
+    }
+
+    /* ----- VISUAL AVEC IMAGE DE FLEURS (cliquable) ----- */
+    .hero-visual {
+      flex: 1 1 280px;
+      background: #f4eee9;
+      border-radius: 60px;
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.6);
+      min-height: 240px;
+      overflow: hidden;
+      position: relative;
+      cursor: pointer;
+    }
+
+    .hero-visual .flower-image {
+      width: 100%;
+      height: 100%;
+      min-height: 200px;
+      background: #e8ded6;
+      border-radius: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      transition: var(--transition);
+    }
+
+    .hero-visual .flower-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 40px;
+      transition: var(--transition);
+      pointer-events: none;
+    }
+
+    .hero-visual .flower-image img:hover {
+      transform: scale(1.02);
+    }
+
+    /* Petit indicateur "cliquez pour changer" */
+    .hero-visual .click-hint {
+      position: absolute;
+      bottom: 32px;
+      right: 32px;
+      background: rgba(58, 53, 48, 0.75);
+      color: white;
+      padding: 6px 14px;
+      border-radius: 30px;
+      font-size: 0.7rem;
+      letter-spacing: 0.5px;
+      backdrop-filter: blur(4px);
+      opacity: 0.7;
+      transition: var(--transition);
+      pointer-events: none;
+    }
+
+    .hero-visual:hover .click-hint {
+      opacity: 1;
+    }
+
+    .hero-visual .deco-dots {
+      position: absolute;
+      font-size: 1.2rem;
+      color: var(--accent);
+      opacity: 0.3;
+      pointer-events: none;
+    }
+
+    .hero-visual .deco-dots.d1 { top: 12px; left: 16px; }
+    .hero-visual .deco-dots.d2 { bottom: 12px; right: 16px; }
+    .hero-visual .deco-dots.d3 { top: 12px; right: 16px; }
+    .hero-visual .deco-dots.d4 { bottom: 12px; left: 16px; }
+
+    /* ----- FEATURES (badges) ----- */
+    .features {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px 48px;
+      padding: 18px 0;
+      border-top: 1px solid var(--border-color);
+      border-bottom: 1px solid var(--border-color);
+      margin: 10px 0 30px;
+    }
+    .feature-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 400;
+      color: var(--primary-light);
+    }
+    .feature-item i {
+      color: var(--accent);
+      font-size: 1.4rem;
+      width: 30px;
+      text-align: center;
+    }
+    .feature-item strong {
+      color: var(--text-dark);
+      font-weight: 500;
+    }
+
+    /* ----- SECTION TITRES ----- */
+    .section-title {
+      text-align: center;
+      font-size: 2.4rem;
+      font-weight: 300;
+      margin: 50px 0 12px;
+    }
+    .section-sub {
+      text-align: center;
+      color: var(--text-muted);
+      max-width: 500px;
+      margin: 0 auto 36px;
+    }
+
+    /* ----- COLLECTIONS AVEC IMAGES ET EMOJIS ----- */
+    .collections-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 28px;
+      margin: 20px 0 40px;
+    }
+
+    .collection-card {
+      background: var(--bg-card);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border-color);
+      transition: var(--transition);
+      text-align: center;
+    }
+
+    .collection-card:hover {
+      transform: translateY(-6px);
+    }
+
+    .collection-card .collection-img {
+      width: 100%;
+      height: 180px;
+      overflow: hidden;
+      background: #f4eee9;
+    }
+
+    .collection-card .collection-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: var(--transition);
+    }
+
+    .collection-card:hover .collection-img img {
+      transform: scale(1.04);
+    }
+
+    .collection-card .collection-content {
+      padding: 20px 18px 24px;
+    }
+
+    .collection-card i {
+      font-size: 2rem;
+      color: var(--accent);
+      margin-bottom: 8px;
+      display: inline-block;
+      background: var(--bg-light);
+      padding: 10px;
+      border-radius: 60px;
+      border: 1px solid var(--border-color);
+    }
+
+    .collection-card h3 {
+      font-weight: 500;
+      font-size: 1.2rem;
+      margin-top: 4px;
+    }
+
+    .collection-card h3 .emoji {
+      margin-right: 6px;
+    }
+
+    .collection-card p {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-top: 4px;
+    }
+
+    .collection-card p .emoji {
+      margin-right: 4px;
+    }
+
+    /* ----- PRODUITS (grille) ----- */
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 28px;
+      margin: 20px 0 40px;
+    }
+    .product-card {
+      background: var(--bg-card);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border-color);
+      transition: var(--transition);
+      display: flex;
+      flex-direction: column;
+    }
+    .product-card:hover {
+      transform: translateY(-6px);
+    }
+
+    .product-img {
+      height: 180px;
+      background: #f4eee9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3.6rem;
+      color: var(--accent);
+      border-bottom: 1px solid var(--border-color);
+    }
+    .product-info {
+      padding: 16px 18px 20px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .product-badge {
+      font-size: 0.65rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      color: var(--accent);
+      background: var(--accent-light);
+      padding: 2px 14px;
+      border-radius: 30px;
+      display: inline-block;
+      align-self: flex-start;
+      margin-bottom: 6px;
+    }
+    .product-name {
+      font-weight: 500;
+      font-size: 1.1rem;
+      margin-bottom: 2px;
+    }
+    .product-desc {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-bottom: 12px;
+    }
+    .product-bottom {
+      margin-top: auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid var(--border-color);
+      padding-top: 14px;
+    }
+    .product-price {
+      font-weight: 600;
+      font-size: 1.2rem;
+    }
+    .btn-add {
+      background: var(--bg-light);
+      border: 1px solid var(--border-color);
+      padding: 6px 16px;
+      border-radius: 40px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    .btn-add:hover {
+      background: var(--accent-light);
+      border-color: var(--accent);
+    }
+
+    /* ----- HISTOIRE (section cible) ----- */
+    .story-section {
+      background: #f4eee9;
+      border-radius: var(--radius);
+      padding: 40px 32px;
+      margin: 40px 0;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 30px;
+      scroll-margin-top: 20px;
+    }
+    .story-text {
+      flex: 2 1 280px;
+    }
+    .story-text h2 {
+      font-weight: 300;
+      font-size: 2rem;
+      margin-bottom: 8px;
+    }
+    .story-text h2 i {
+      color: var(--accent);
+    }
+    .story-text p {
+      color: var(--text-muted);
+      max-width: 500px;
+    }
+    .story-stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 24px 40px;
+      flex: 1 1 220px;
+      justify-content: center;
+    }
+    .stat {
+      text-align: center;
+    }
+    .stat-number {
+      font-size: 2.2rem;
+      font-weight: 300;
+      color: var(--primary);
+    }
+    .stat-label {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    /* ----- TÉMOIGNAGES ----- */
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 24px;
+      margin: 20px 0 40px;
+    }
+    .testimonial-card {
+      background: var(--bg-card);
+      padding: 24px;
+      border-radius: var(--radius);
+      border: 1px solid var(--border-color);
+      box-shadow: var(--shadow);
+    }
+    .testimonial-card .stars {
+      color: #f5b342;
+      margin-bottom: 10px;
+      letter-spacing: 2px;
+    }
+    .testimonial-card p {
+      font-style: italic;
+      color: var(--text-dark);
+      margin-bottom: 12px;
+    }
+    .testimonial-card .author {
+      font-weight: 500;
+      color: var(--primary-light);
+    }
+    .testimonial-card .role {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    /* ----- CONTACT ----- */
+    .contact-section {
+      background: var(--bg-card);
+      border-radius: var(--radius);
+      padding: 36px 28px;
+      margin: 30px 0 40px;
+      border: 1px solid var(--border-color);
+      box-shadow: var(--shadow);
+    }
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 24px;
+      margin-top: 20px;
+    }
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .contact-item i {
+      font-size: 1.5rem;
+      color: var(--accent);
+      width: 36px;
+      text-align: center;
+    }
+
+    /* ----- FOOTER ----- */
+    .footer {
+      border-top: 1px solid var(--border-color);
+      padding: 24px 0 20px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+    .footer a {
+      margin: 0 6px;
+    }
+    .footer a:hover {
+      color: var(--text-dark);
+    }
+
+    /* ----- RESPONSIVE ----- */
+    @media (max-width: 700px) {
+      .header {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .nav-links {
+        flex-wrap: wrap;
+        gap: 14px;
+      }
+      .hero-text h1 {
+        font-size: 2.6rem;
+      }
+      .section-title {
+        font-size: 2rem;
+      }
+      .story-section {
+        flex-direction: column;
+        text-align: center;
+      }
+      .story-text p {
+        margin: 0 auto;
+      }
+      .hero-visual {
+        min-height: 180px;
+      }
+      .hero-visual .flower-image {
+        min-height: 150px;
+      }
+      .hero-visual .click-hint {
+        bottom: 16px;
+        right: 16px;
+        font-size: 0.6rem;
+        padding: 4px 10px;
+      }
+      .collection-card .collection-img {
+        height: 140px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+
+    <!-- ===== HEADER ===== -->
+    <header class="header">
+      <div class="logo"><i class="fas fa-leaf"></i> L'Atelier <span>Botanique</span></div>
+      <nav class="nav-links">
+        <a href="#">Bouquets</a>
+        <a href="#">Cadres</a>
+        <a href="#">Décoration</a>
+        <a href="#">Personnalisé</a>
+      </nav>
+      <div class="header-icons">
+        <i class="fas fa-search"></i>
+        <i class="fas fa-shopping-bag"></i>
+        <i class="fas fa-user"></i>
+      </div>
+    </header>
+
+    <!-- ===== HERO AVEC IMAGE DE FLEURS CLICABLE ===== -->
+    <section class="hero">
+      <div class="hero-text">
+        <span class="hero-badge"><i class="fas fa-spa"></i> COLLECTION PRINTEMPS 2026</span>
+        <h1><i class="fas fa-seedling"></i> L'art de la <br>fleur éternelle</h1>
+        <p>Découvrez nos bouquets de fleurs artificielles, cadres personnalisés et pièces de décoration uniques — conçus pour sublimer votre intérieur avec élégance.</p>
+        <div class="hero-buttons">
+          <a href="#nos-creations" class="btn btn-primary">DÉCOUVRIR LA BOUTIQUE</a>
+          <a href="#notre-histoire" class="btn btn-secondary">NOTRE HISTOIRE</a>
+        </div>
+      </div>
+
+      <!-- VISUAL AVEC IMAGE CLICABLE -->
+      <div class="hero-visual" id="flowerClickZone">
+        <span class="deco-dots d1"><i class="fas fa-circle"></i></span>
+        <span class="deco-dots d2"><i class="fas fa-circle"></i></span>
+        <span class="deco-dots d3"><i class="fas fa-circle"></i></span>
+        <span class="deco-dots d4"><i class="fas fa-circle"></i></span>
+
+        <div class="flower-image">
+          <img
+            id="heroFlowerImage"
+            src="https://images.unsplash.com/photo-1582794543139-8ac9cb0f7b11?w=600&h=400&fit=crop&crop=center"
+            alt="Bouquet de fleurs artificielles"
+            loading="lazy"
+          />
+        </div>
+
+        <span class="click-hint"><i class="fas fa-mouse-pointer"></i> Cliquez pour changer</span>
+      </div>
+    </section>
+
+    <!-- ===== FEATURES ===== -->
+    <div class="features">
+      <span class="feature-item"><i class="fas fa-hand-holding-heart"></i> <strong>100% Artisanal</strong></span>
+      <span class="feature-item"><i class="fas fa-recycle"></i> <strong>Durable</strong></span>
+      <span class="feature-item"><i class="fas fa-leaf"></i> <strong>Éco-responsable</strong></span>
+    </div>
+
+    <!-- ===== COLLECTIONS AVEC VOS IMAGES ET EMOJIS ===== -->
+    <h2 class="section-title">Trois univers, une passion</h2>
+    <p class="section-sub">Chaque pièce est créée avec soin pour apporter une touche unique à votre espace de vie.</p>
+    <div class="collections-grid">
+      <!-- Collection Bouquets -->
+      <div class="collection-card">
+        <div class="collection-img">
+          <img
+            src="FLEURS_INTERIEUR.webp"
+            alt="Bouquet de fleurs artificielles"
+            loading="lazy"
+          />
+        </div>
+        <div class="collection-content">
+          <i class="fas fa-seedling"></i>
+          <h3><span class="emoji">💐</span> Bouquets de Fleurs</h3>
+          <p><span class="emoji">✨</span> Beauté éternelle</p>
+        </div>
+      </div>
+
+      <!-- Collection Cadres -->
+      <div class="collection-card">
+        <div class="collection-img">
+          <img
+            src="cadre.webp"
+            alt="Cadres personnalisés"
+            loading="lazy"
+          />
+        </div>
+        <div class="collection-content">
+          <i class="fas fa-image"></i>
+          <h3><span class="emoji">🖼️</span> Cadres Personnalisés</h3>
+          <p><span class="emoji">❤️</span> Souvenirs précieux</p>
+        </div>
+      </div>
+
+      <!-- Collection Décoration (modifiée selon votre image) -->
+      <div class="collection-card">
+        <div class="collection-img">
+          <img
+            src="carte.jfif"
+            alt="Décoration intérieure"
+            loading="lazy"
+          />
+        </div>
+        <div class="collection-content">
+          <i class="fas fa-candle"></i>
+          <h3><span class="emoji">🏠</span> Décorations</h3>
+          <p><span class="emoji">✨</span> Intérieurs chaleureux</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== PRODUITS (NOS CRÉATIONS) ===== -->
+    <h2 id="nos-creations" class="section-title" style="scroll-margin-top: 20px;">Nos créations</h2>
+    <p class="section-sub">Des pièces uniques, faites à la main avec des matériaux de qualité.</p>
+    <div class="products-grid">
+      <!-- produit 1 -->
+      <div class="product-card">
+        <div class="product-img"><i class="fas fa-rose"></i></div>
+        <div class="product-info">
+          <span class="product-badge">⭐ Best-seller</span>
+          <div class="product-name">Bouquet Rose Éternelle</div>
+          <div class="product-desc">12 roses en soie, finition réaliste</div>
+          <div class="product-bottom">
+            <span class="product-price">49,90 €</span>
+            <button class="btn-add" onclick="alert('🛒 Bouquet Rose Éternelle ajouté au panier (simulation)')"><i class="fas fa-plus"></i> Ajouter</button>
+          </div>
+        </div>
+      </div>
+      <!-- produit 2 -->
+      <div class="product-card">
+        <div class="product-img"><i class="fas fa-leaf"></i></div>
+        <div class="product-info">
+          <span class="product-badge">🌸 Promo</span>
+          <div class="product-name">Arrangement Pivoines</div>
+          <div class="product-desc">8 pivoines avec feuillage eucalyptus</div>
+          <div class="product-bottom">
+            <span class="product-price">39,90 €</span>
+            <button class="btn-add" onclick="alert('🛒 Arrangement Pivoines ajouté au panier (simulation)')"><i class="fas fa-plus"></i> Ajouter</button>
+          </div>
+        </div>
+      </div>
+      <!-- produit 3 -->
+      <div class="product-card">
+        <div class="product-img"><i class="fas fa-flower"></i></div>
+        <div class="product-info">
+          <span class="product-badge">✨ Nouveau</span>
+          <div class="product-name">Gerbe de Lavande</div>
+          <div class="product-desc">Brin de lavande séchée, parfum subtil</div>
+          <div class="product-bottom">
+            <span class="product-price">24,90 €</span>
+            <button class="btn-add" onclick="alert('🛒 Gerbe de Lavande ajoutée au panier (simulation)')"><i class="fas fa-plus"></i> Ajouter</button>
+          </div>
+        </div>
+      </div>
+      <!-- produit 4 -->
+      <div class="product-card">
+        <div class="product-img"><i class="fas fa-crown"></i></div>
+        <div class="product-info">
+          <span class="product-badge">🌟 Nouveau</span>
+          <div class="product-name">Couronne Florale</div>
+          <div class="product-desc">Mixte fleurs séchées et artificielles</div>
+          <div class="product-bottom">
+            <span class="product-price">34,90 €</span>
+            <button class="btn-add" onclick="alert('🛒 Couronne Florale ajoutée au panier (simulation)')"><i class="fas fa-plus"></i> Ajouter</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== HISTOIRE ===== -->
+    <div id="notre-histoire" class="story-section">
+      <div class="story-text">
+        <h2><i class="fas fa-feather-alt"></i> Un atelier né de la passion</h2>
+        <p>L'Atelier Botanique est né d'une passion pour les fleurs et la décoration. Chaque création est pensée et réalisée à la main, avec le souci du détail et l'amour du beau.</p>
+        <p style="margin-top: 8px;">Nos fleurs artificielles sont conçues pour reproduire la beauté naturelle, tandis que nos cadres personnalisés capturent vos plus beaux souvenirs.</p>
+      </div>
+      <div class="story-stats">
+        <div class="stat"><div class="stat-number">250+</div><div class="stat-label">Créations vendues</div></div>
+        <div class="stat"><div class="stat-number">100%</div><div class="stat-label">Fait main</div></div>
+        <div class="stat"><div class="stat-number">5★</div><div class="stat-label">Avis clients</div></div>
+      </div>
+    </div>
+
+    <!-- ===== TÉMOIGNAGES ===== -->
+    <h2 class="section-title">Ce que disent nos clients</h2>
+    <p class="section-sub">La satisfaction de nos clients est notre plus belle récompense.</p>
+    <div class="testimonials-grid">
+      <div class="testimonial-card">
+        <div class="stars">★★★★★</div>
+        <p>"Un bouquet magnifique qui ne fane jamais ! La qualité est incroyable, on dirait de vraies fleurs. Je suis ravie de mon achat."</p>
+        <div class="author">Sophie M.</div>
+        <div class="role">Cliente fidèle</div>
+      </div>
+      <div class="testimonial-card">
+        <div class="stars">★★★★★</div>
+        <p>"Le cadre personnalisé que j'ai commandé est absolument sublime. Un travail soigné et une attention aux détails remarquable."</p>
+        <div class="author">Lucas D.</div>
+        <div class="role">Cadeau anniversaire</div>
+      </div>
+      <div class="testimonial-card">
+        <div class="stars">★★★★★</div>
+        <p>"Ma décoration d'intérieur a complètement changé grâce à ces pièces uniques. L'ambiance est devenue chaleureuse et élégante."</p>
+        <div class="author">Amira K.</div>
+        <div class="role">Décoration salon</div>
+      </div>
+    </div>
+
+    <!-- ===== CONTACT ===== -->
+    <div class="contact-section">
+      <h2 style="font-weight:300; font-size:2rem; text-align:center;">Parlons de votre projet</h2>
+      <p style="text-align:center; color:var(--text-muted); max-width:500px; margin:0 auto 16px;">Une question, une demande personnalisée ? N'hésitez pas à nous écrire.</p>
+      <div class="contact-grid">
+        <div class="contact-item"><i class="fas fa-envelope"></i> contact@atelier-botanique.fr</div>
+        <div class="contact-item"><i class="fas fa-phone-alt"></i> +33 6 12 34 56 78</div>
+        <div class="contact-item"><i class="fas fa-map-marker-alt"></i> Algerie, Oran</div>
+        <div class="contact-item"><i class="fas fa-clock"></i> 24H/7</div>
+      </div>
+    </div>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="footer">
+      <div><i class="fas fa-leaf" style="color:var(--accent);"></i> L'Atelier Botanique · projet portfolio</div>
+      <div>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+        <a href="#"><i class="fab fa-pinterest"></i></a>
+        <a href="#"><i class="fas fa-envelope"></i></a>
+        <span style="margin-left:12px; font-size:0.85rem;">Commande & paiement</span>
+      </div>
+    </footer>
+
+  </div>
+
+  <script>
+    // ----- CHANGEMENT D'IMAGE AU CLIC -----
+    (function() {
+      const imgElement = document.getElementById('heroFlowerImage');
+      const clickZone = document.getElementById('flowerClickZone');
+
+      // Liste des images de bouquets (Unsplash - fleurs artificielles / décoration)
+      const flowerImages = [
+        'https://images.unsplash.com/photo-1582794543139-8ac9cb0f7b11?w=600&h=400&fit=crop&crop=center',
+        'https://images.unsplash.com/photo-1513519245088-0e12902e5a38?w=600&h=400&fit=crop&crop=center',
+        'https://images.unsplash.com/photo-1526047932273-341f2a7631f9?w=600&h=400&fit=crop&crop=center',
+        'https://images.unsplash.com/photo-1513161455079-7dc1de15ef3e?w=600&h=400&fit=crop&crop=center',
+        'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=600&h=400&fit=crop&crop=center',
+      ];
+
+      let currentIndex = 0;
+
+      // Fonction pour changer l'image
+      function changeFlowerImage() {
+        currentIndex = (currentIndex + 1) % flowerImages.length;
+        const newSrc = flowerImages[currentIndex];
+
+        // Petit effet de fade-out / fade-in
+        imgElement.style.opacity = '0.6';
+        setTimeout(() => {
+          imgElement.src = newSrc;
+          imgElement.style.opacity = '1';
+        }, 150);
+      }
+
+      // Écouteur de clic sur la zone (l'image elle-même ou le conteneur)
+      clickZone.addEventListener('click', function(e) {
+        // Évite que le clic sur l'image ne déclenche un double effet
+        e.stopPropagation();
+        changeFlowerImage();
+      });
+
+      console.log('🌿 Image de fleurs cliquable — ' + flowerImages.length + ' variétés disponibles');
+    })();
+  </script>
+
+</body>
+</html>

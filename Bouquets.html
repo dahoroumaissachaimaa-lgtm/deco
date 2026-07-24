@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nos Bouquets - Création Tasnim</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap" rel="stylesheet" />
+  <style>
+    /* ----- RESET & VARIABLES ----- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --primary: #3a3530;
+      --primary-light: #5a4748;
+      --accent: #b4846c;
+      --accent-light: #dbb8a8;
+      --bg-light: #fbf8f4;
+      --bg-card: #ffffff;
+      --text-dark: #2c2a28;
+      --text-muted: #6b605a;
+      --border-color: #e8e0d9;
+      --shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+      --radius: 24px;
+      --transition: 0.25s ease;
+      --success: #4caf50;
+      --instagram: #E4405F;
+      --facebook: #1877F2;
+      --tiktok: #000000;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Lato', 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      background-color: var(--bg-light);
+      color: var(--text-dark);
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    /* ----- HEADER ----- */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 0;
+      border-bottom: 1px solid var(--border-color);
+      flex-wrap: wrap;
+      gap: 16px;
+      position: sticky;
+      top: 0;
+      background: var(--bg-light);
+      z-index: 100;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 1.8rem;
+      font-weight: 300;
+      letter-spacing: 1px;
+    }
+
+    /* ----- LOGO IMAGE (cliquable) ----- */
+    .logo-image {
+      width: 55px;
+      height: 55px;
+      border-radius: 50%;
+      overflow: hidden;
+      flex-shrink: 0;
+      border: 2px solid var(--accent-light);
+      box-shadow: 0 4px 12px rgba(180, 132, 108, 0.25);
+      transition: var(--transition);
+      cursor: pointer;
+    }
+    .logo-image:hover {
+      transform: scale(1.05);
+      box-shadow: 0 6px 20px rgba(180, 132, 108, 0.35);
+    }
+    .logo-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .logo-text {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.2;
+    }
+    .logo-text .creation {
+      font-size: 0.9rem;
+      font-weight: 300;
+      color: var(--text-muted);
+      letter-spacing: 2px;
+    }
+    .logo-text .tasnim {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--accent);
+      letter-spacing: 1px;
+    }
+    .logo-text .slogan {
+      font-size: 0.6rem;
+      font-weight: 300;
+      color: var(--text-muted);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 28px;
+      font-weight: 400;
+      color: var(--primary-light);
+      align-items: center;
+    }
+    .nav-links a {
+      border-bottom: 2px solid transparent;
+      padding-bottom: 4px;
+      transition: var(--transition);
+    }
+    .nav-links a:hover,
+    .nav-links a.active {
+      border-bottom-color: var(--accent);
+      color: var(--text-dark);
+    }
+
+    .header-icons {
+      display: flex;
+      gap: 18px;
+      font-size: 1.2rem;
+      color: var(--primary-light);
+      align-items: center;
+    }
+    .header-icons i {
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    .header-icons i:hover {
+      color: var(--accent);
+    }
+
+    /* ----- MODALE POUR L'IMAGE DE PROFIL AGRANDIE ----- */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.85);
+      z-index: 9999;
+      justify-content: center;
+      align-items: center;
+      backdrop-filter: blur(8px);
+      animation: fadeIn 0.3s ease;
+    }
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes scaleIn {
+      from { transform: scale(0.8); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    .modal-content {
+      max-width: 90vw;
+      max-height: 90vh;
+      border-radius: 20px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+      animation: scaleIn 0.35s ease;
+      border: 3px solid rgba(255, 255, 255, 0.1);
+    }
+    .modal-content img {
+      width: 100%;
+      height: 100%;
+      max-width: 600px;
+      max-height: 80vh;
+      object-fit: contain;
+      border-radius: 16px;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 30px;
+      right: 40px;
+      font-size: 2.5rem;
+      color: white;
+      cursor: pointer;
+      transition: var(--transition);
+      background: none;
+      border: none;
+      z-index: 10000;
+    }
+    .modal-close:hover {
+      transform: rotate(90deg);
+      color: var(--accent-light);
+    }
+
+    /* ----- BANNER PAGE ----- */
+    .page-banner {
+      background: #f4eee9;
+      border-radius: var(--radius);
+      padding: 40px 32px;
+      margin: 30px 0 40px;
+      text-align: center;
+    }
+    .page-banner h1 {
+      font-size: 2.8rem;
+      font-weight: 300;
+      margin-bottom: 8px;
+    }
+    .page-banner h1 i {
+      color: var(--accent);
+    }
+    .page-banner p {
+      color: var(--text-muted);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* ----- FILTRES ----- */
+    .filters {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 40px;
+    }
+    .filters button {
+      padding: 8px 24px;
+      border-radius: 40px;
+      border: 1px solid var(--border-color);
+      background: white;
+      font-family: 'Lato', sans-serif;
+      font-weight: 400;
+      cursor: pointer;
+      transition: var(--transition);
+      font-size: 0.9rem;
+    }
+    .filters button:hover,
+    .filters button.active {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+    }
+
+    /* ----- GRILLE DES BOUQUETS (style showroom) ----- */
+    .bouquets-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 32px;
+      margin-bottom: 50px;
+    }
+
+    .bouquet-card {
+      background: var(--bg-card);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border-color);
+      transition: var(--transition);
+    }
+    .bouquet-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.08);
+    }
+
+    .bouquet-card .bouquet-img {
+      width: 100%;
+      height: 260px;
+      background: #f4eee9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 4.5rem;
+      color: var(--accent);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .bouquet-card .bouquet-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: var(--transition);
+    }
+
+    .bouquet-card:hover .bouquet-img img {
+      transform: scale(1.04);
+    }
+
+    .bouquet-card .bouquet-img .badge {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      background: var(--accent);
+      color: white;
+      padding: 4px 14px;
+      border-radius: 30px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .bouquet-card .bouquet-info {
+      padding: 20px 22px 24px;
+    }
+
+    .bouquet-card .bouquet-info .bouquet-name {
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .bouquet-card .bouquet-info .bouquet-desc {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      margin-bottom: 8px;
+    }
+
+    .bouquet-card .bouquet-info .bouquet-details {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px 20px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+      padding: 8px 0;
+      border-top: 1px solid var(--border-color);
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .bouquet-card .bouquet-info .bouquet-details span i {
+      color: var(--accent);
+      margin-right: 4px;
+      width: 18px;
+    }
+
+    .bouquet-card .bouquet-info .bouquet-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 4px;
+    }
+
+    .bouquet-card .bouquet-info .bouquet-price {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .bouquet-card .bouquet-info .btn-commander {
+      background: var(--primary);
+      color: white;
+      padding: 8px 20px;
+      border-radius: 40px;
+      border: none;
+      font-weight: 700;
+      cursor: pointer;
+      transition: var(--transition);
+      font-family: 'Lato', sans-serif;
+      font-size: 0.85rem;
+    }
+
+    .bouquet-card .bouquet-info .btn-commander:hover {
+      background: #1f1b18;
+      transform: scale(1.02);
+    }
+
+    .bouquet-card .bouquet-info .btn-commander i {
+      margin-right: 6px;
+    }
+
+    /* ----- SECTION "PERSONNALISÉ" (call to action) ----- */
+    .custom-section {
+      background: #f4eee9;
+      border-radius: var(--radius);
+      padding: 40px 32px;
+      margin: 30px 0 50px;
+      text-align: center;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 30px;
+    }
+
+    .custom-section .custom-text {
+      flex: 2 1 300px;
+    }
+    .custom-section .custom-text h2 {
+      font-weight: 300;
+      font-size: 2rem;
+      margin-bottom: 6px;
+    }
+    .custom-section .custom-text h2 i {
+      color: var(--accent);
+    }
+    .custom-section .custom-text p {
+      color: var(--text-muted);
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    .custom-section .btn-custom {
+      background: var(--accent);
+      color: white;
+      padding: 14px 40px;
+      border-radius: 40px;
+      border: none;
+      font-weight: 700;
+      cursor: pointer;
+      transition: var(--transition);
+      font-family: 'Lato', sans-serif;
+      font-size: 1rem;
+    }
+    .custom-section .btn-custom:hover {
+      background: #a0705a;
+      transform: scale(1.02);
+    }
+
+    /* ----- FOOTER ----- */
+    .footer {
+      border-top: 1px solid var(--border-color);
+      padding: 24px 0 20px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+    .footer .footer-left {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .footer .footer-right {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .footer .footer-right a {
+      transition: var(--transition);
+      font-size: 1.2rem;
+    }
+    .footer .footer-right a:hover {
+      transform: scale(1.1);
+    }
+    .footer .footer-right .instagram:hover { color: var(--instagram); }
+    .footer .footer-right .facebook:hover { color: var(--facebook); }
+    .footer .footer-right .tiktok:hover { color: var(--tiktok); }
+    .footer .footer-right .phone-link {
+      font-weight: 700;
+      color: var(--primary);
+      transition: var(--transition);
+    }
+    .footer .footer-right .phone-link:hover {
+      color: var(--accent);
+    }
+
+    /* ----- NOTIFICATION ----- */
+    .notification {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background: var(--primary);
+      color: white;
+      padding: 14px 28px;
+      border-radius: 40px;
+      box-shadow: var(--shadow);
+      z-index: 2000;
+      transform: translateY(100px);
+      opacity: 0;
+      transition: all 0.4s ease;
+      font-weight: 700;
+    }
+    .notification.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+    .notification i {
+      margin-right: 10px;
+    }
+
+    /* ----- RESPONSIVE ----- */
+    @media (max-width: 700px) {
+      .header {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .nav-links {
+        flex-wrap: wrap;
+        gap: 14px;
+      }
+      .page-banner h1 {
+        font-size: 2rem;
+      }
+      .bouquets-grid {
+        grid-template-columns: 1fr;
+      }
+      .custom-section {
+        flex-direction: column;
+        text-align: center;
+      }
+      .footer {
+        flex-direction: column;
+        gap: 12px;
+        text-align: center;
+      }
+      .footer .footer-right {
+        justify-content: center;
+      }
+      .logo {
+        font-size: 1.4rem;
+      }
+      .logo-image {
+        width: 45px;
+        height: 45px;
+      }
+      .logo-text .tasnim {
+        font-size: 1.4rem;
+      }
+      .logo-text .creation {
+        font-size: 0.7rem;
+      }
+      .logo-text .slogan {
+        font-size: 0.5rem;
+      }
+      .modal-close {
+        top: 20px;
+        right: 20px;
+        font-size: 2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+
+    <!-- ===== HEADER AVEC LOGO IMAGE CLICABLE ===== -->
+    <header class="header">
+      <div class="logo">
+        <!-- Logo image cliquable -->
+        <div class="logo-image" id="logoImage">
+          <img src="photo-profil.jfif" alt="Création Tasnim" />
+        </div>
+        <div class="logo-text">
+          <span class="creation">CRÉATION</span>
+          <span class="tasnim">TASNIM</span>
+          <span class="slogan">fleurs · cadres · cadeaux</span>
+        </div>
+      </div>
+      <nav class="nav-links">
+        <a href="acceil.html">Accueil</a>
+        <a href="Bouquets.html" class="active">Bouquets</a>
+        <a href="cadre.html">Cadres</a>
+        <a href="decoration.html">Décoration</a>
+        <a href="personnalise.html">Personnalisé</a>
+      </nav>
+      <div class="header-icons">
+        <i class="fas fa-search"></i>
+        <i class="fas fa-shopping-bag"></i>
+        <i class="fas fa-user"></i>
+      </div>
+    </header>
+
+    <!-- ===== MODALE POUR L'IMAGE DE PROFIL AGRANDIE ===== -->
+    <div class="modal-overlay" id="imageModal">
+      <button class="modal-close" id="modalClose">&times;</button>
+      <div class="modal-content">
+        <img src="photo-profil.jfif" alt="Création Tasnim - Agrandie" />
+      </div>
+    </div>
+
+    <!-- ===== BANNER ===== -->
+    <section class="page-banner">
+      <h1><i class="fas fa-seedling"></i> Nos Bouquets</h1>
+      <p>Découvrez notre collection de bouquets de fleurs artificielles. Chaque création est unique, réalisée à la main avec des matériaux de qualité.</p>
+    </section>
+
+    <!-- ===== FILTRES ===== -->
+    <div class="filters" id="filterButtons">
+      <button class="active" data-filter="all">Tous</button>
+      <button data-filter="rose">Roses</button>
+      <button data-filter="pivoine">Pivoines</button>
+      <button data-filter="lavande">Lavande</button>
+      <button data-filter="mixte">Mixte</button>
+      <button data-filter="saisonnier">Saisonnier</button>
+    </div>
+
+    <!-- ===== GRILLE DES BOUQUETS ===== -->
+    <div class="bouquets-grid" id="bouquetsGrid">
+      <!-- Les bouquets seront générés par JavaScript -->
+    </div>
+
+    <!-- ===== SECTION PERSONNALISÉ ===== -->
+    <section class="custom-section">
+      <div class="custom-text">
+        <h2><i class="fas fa-feather-alt"></i> Vous ne trouvez pas votre bonheur ?</h2>
+        <p>Nous réalisons des bouquets sur mesure selon vos envies. Couleurs, fleurs, taille — tout est personnalisable.</p>
+      </div>
+      <button class="btn-custom" onclick="alert('📞 Contactez-nous pour créer votre bouquet personnalisé !')">
+        <i class="fas fa-pen-fancy"></i> Créer mon bouquet
+      </button>
+    </section>
+
+    <!-- ===== FOOTER AVEC RÉSEAUX SOCIAUX ===== -->
+    <footer class="footer">
+      <div class="footer-left">
+        <i class="fas fa-leaf" style="color:var(--accent);"></i> Création Tasnim · projet portfolio
+      </div>
+      <div class="footer-right">
+        <a href="https://www.instagram.com/votrecompte" target="_blank" class="instagram" aria-label="Instagram">
+          <i class="fab fa-instagram"></i>
+        </a>
+        <a href="https://www.facebook.com/votrecompte" target="_blank" class="facebook" aria-label="Facebook">
+          <i class="fab fa-facebook"></i>
+        </a>
+        <a href="https://www.tiktok.com/@tasnimcreation?is_from_webapp=1&sender_device=pc" target="_blank" class="tiktok" aria-label="TikTok">
+          <i class="fab fa-tiktok"></i>
+        </a>
+        <a href="tel:+213782586777" class="phone-link"><i class="fas fa-phone-alt"></i> +213 7 82 58 67 77</a>
+        <span style="font-size:0.85rem;">Commande & paiement</span>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- ===== NOTIFICATION ===== -->
+  <div class="notification" id="notification">
+    <i class="fas fa-check-circle"></i>
+    <span id="notifMessage">Demande de commande envoyée</span>
+  </div>
+
+  <script>
+    // =====================================================
+    // MODALE POUR L'IMAGE DE PROFIL
+    // =====================================================
+    (function() {
+      const logoImage = document.getElementById('logoImage');
+      const modal = document.getElementById('imageModal');
+      const modalClose = document.getElementById('modalClose');
+
+      // Ouvrir la modale au clic sur l'image
+      logoImage.addEventListener('click', function(e) {
+        e.stopPropagation();
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      });
+
+      // Fermer la modale
+      function closeModal() {
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+
+      modalClose.addEventListener('click', closeModal);
+
+      // Fermer en cliquant à l'extérieur de l'image
+      modal.addEventListener('click', function(e) {
+        if (e.target === modal) {
+          closeModal();
+        }
+      });
+
+      // Fermer avec la touche Echap
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && modal.classList.contains('active')) {
+          closeModal();
+        }
+      });
+    })();
+
+    // =====================================================
+    // DONNÉES DES BOUQUETS (modèles déjà réalisés)
+    // =====================================================
+    const bouquets = [
+      {
+        id: 1,
+        name: 'Bouquet Rose Éternelle',
+        desc: 'Un classique intemporel de 12 roses en soie, finition réaliste.',
+        price: '49,90 €',
+        image: '🌹',
+        category: 'rose',
+        details: { taille: '30 cm', composition: '12 roses en soie', coloris: 'Rouge & Blanc' },
+        badge: '⭐ Best-seller'
+      },
+      {
+        id: 2,
+        name: 'Arrangement Pivoines',
+        desc: '8 pivoines voluptueuses avec feuillage d\'eucalyptus.',
+        price: '39,90 €',
+        image: '🌸',
+        category: 'pivoine',
+        details: { taille: '35 cm', composition: '8 pivoines', coloris: 'Rose poudré' },
+        badge: '🌸 Promo'
+      },
+      {
+        id: 3,
+        name: 'Gerbe de Lavande',
+        desc: 'Brin de lavande séchée, parfum subtil et élégance provençale.',
+        price: '24,90 €',
+        image: '💜',
+        category: 'lavande',
+        details: { taille: '40 cm', composition: 'Lavande séchée', coloris: 'Violet' },
+        badge: '✨ Nouveau'
+      },
+      {
+        id: 4,
+        name: 'Couronne Florale',
+        desc: 'Mixte de fleurs séchées et artificielles pour une couronne unique.',
+        price: '34,90 €',
+        image: '🌺',
+        category: 'mixte',
+        details: { taille: '25 cm', composition: 'Fleurs séchées & artificielles', coloris: 'Multicolore' },
+        badge: '🌟 Nouveau'
+      },
+      {
+        id: 5,
+        name: 'Bouquet Champêtre',
+        desc: 'Composition champêtre avec tournesols, gypsophile et eucalyptus.',
+        price: '44,90 €',
+        image: '🌻',
+        category: 'mixte',
+        details: { taille: '38 cm', composition: 'Tournesols, gypsophile', coloris: 'Jaune & Vert' },
+        badge: '⭐ Best-seller'
+      },
+      {
+        id: 6,
+        name: 'Roses Blanches & Perles',
+        desc: 'Élégant bouquet de roses blanches rehaussé de perles cristallines.',
+        price: '54,90 €',
+        image: '🤍',
+        category: 'rose',
+        details: { taille: '32 cm', composition: '10 roses blanches', coloris: 'Blanc & Argent' },
+        badge: '✨ Édition limitée'
+      },
+      {
+        id: 7,
+        name: 'Bouquet Automnal',
+        desc: 'Chaudes couleurs d\'automne avec des fleurs séchées et des branchages.',
+        price: '36,90 €',
+        image: '🍂',
+        category: 'saisonnier',
+        details: { taille: '35 cm', composition: 'Fleurs séchées, branchages', coloris: 'Orange & Marron' },
+        badge: '🍂 Saisonnier'
+      },
+      {
+        id: 8,
+        name: 'Pivoines & Hortensias',
+        desc: 'Mariage raffiné de pivoines et d\'hortensias pour un effet volumineux.',
+        price: '49,90 €',
+        image: '💗',
+        category: 'pivoine',
+        details: { taille: '40 cm', composition: 'Pivoines, hortensias', coloris: 'Rose & Bleu' },
+        badge: '⭐ Best-seller'
+      },
+      {
+        id: 9,
+        name: 'Bouquet de Mariée',
+        desc: 'Bouquet de mariée en cascade, avec roses, pivoines et gypsophile.',
+        price: '69,90 €',
+        image: '💐',
+        category: 'mixte',
+        details: { taille: '45 cm', composition: 'Roses, pivoines, gypsophile', coloris: 'Blanc & Ivoire' },
+        badge: '💍 Spécial mariage'
+      },
+      {
+        id: 10,
+        name: 'Lavande & Romarin',
+        desc: 'Bouquet de lavande et romarin séchés, idéal pour une déco provençale.',
+        price: '28,90 €',
+        image: '🌿',
+        category: 'lavande',
+        details: { taille: '38 cm', composition: 'Lavande, romarin', coloris: 'Violet & Vert' },
+        badge: '✨ Nouveau'
+      },
+      {
+        id: 11,
+        name: 'Bouquet Tropical',
+        desc: 'Exotisme garanti avec des fleurs tropicales aux couleurs vives.',
+        price: '45,90 €',
+        image: '🌴',
+        category: 'saisonnier',
+        details: { taille: '30 cm', composition: 'Fleurs tropicales', coloris: 'Jaune, Orange, Rouge' },
+        badge: '🌴 Tendance'
+      },
+      {
+        id: 12,
+        name: 'Mini Bouquet à Offrir',
+        desc: 'Petit bouquet d\'amitié, parfait pour une attention délicate.',
+        price: '18,90 €',
+        image: '🌷',
+        category: 'mixte',
+        details: { taille: '18 cm', composition: 'Fleurs variées', coloris: 'Multicolore' },
+        badge: '🎁 Idée cadeau'
+      }
+    ];
+
+    // =====================================================
+    // AFFICHAGE DES BOUQUETS
+    // =====================================================
+    const grid = document.getElementById('bouquetsGrid');
+    const filterButtons = document.querySelectorAll('#filterButtons button');
+    let currentFilter = 'all';
+
+    function renderBouquets(filter = 'all') {
+      const filtered = filter === 'all' 
+        ? bouquets 
+        : bouquets.filter(b => b.category === filter);
+
+      if (filtered.length === 0) {
+        grid.innerHTML = `
+          <div style="grid-column:1/-1; text-align:center; padding:60px 0; color:var(--text-muted);">
+            <i class="fas fa-search" style="font-size:3rem; margin-bottom:12px; display:block; color:var(--border-color);"></i>
+            <p>Aucun bouquet dans cette catégorie.</p>
+            <p style="font-size:0.9rem;">Essayez une autre catégorie ou consultez tous nos modèles.</p>
+          </div>
+        `;
+        return;
+      }
+
+      grid.innerHTML = filtered.map(b => `
+        <div class="bouquet-card" data-category="${b.category}">
+          <div class="bouquet-img">
+            <span style="font-size:4rem;">${b.image}</span>
+            <span class="badge">${b.badge}</span>
+          </div>
+          <div class="bouquet-info">
+            <div class="bouquet-name">${b.name}</div>
+            <div class="bouquet-desc">${b.desc}</div>
+            <div class="bouquet-details">
+              <span><i class="fas fa-ruler"></i> ${b.details.taille}</span>
+              <span><i class="fas fa-palette"></i> ${b.details.coloris}</span>
+              <span><i class="fas fa-seedling"></i> ${b.details.composition}</span>
+            </div>
+            <div class="bouquet-bottom">
+              <span class="bouquet-price">${b.price}</span>
+              <button class="btn-commander" onclick="commanderBouquet(${b.id})">
+                <i class="fas fa-shopping-cart"></i> Commander
+              </button>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // =====================================================
+    // FILTRES
+    // =====================================================
+    filterButtons.forEach(btn => {
+      btn.addEventListener('click', function() {
+        filterButtons.forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+        currentFilter = this.dataset.filter;
+        renderBouquets(currentFilter);
+      });
+    });
+
+    // =====================================================
+    // COMMANDER UN BOUQUET
+    // =====================================================
+    function commanderBouquet(id) {
+      const bouquet = bouquets.find(b => b.id === id);
+      if (!bouquet) return;
+
+      showNotification(`🌸 "${bouquet.name}" — Demande de commande envoyée !`);
+      
+      // Simulation d'envoi de commande
+      console.log(`📦 Commande pour : ${bouquet.name} (${bouquet.price})`);
+    }
+
+    // =====================================================
+    // NOTIFICATION
+    // =====================================================
+    let notifTimeout;
+
+    function showNotification(message) {
+      const notif = document.getElementById('notification');
+      const msg = document.getElementById('notifMessage');
+      msg.textContent = message;
+      notif.classList.add('show');
+      clearTimeout(notifTimeout);
+      notifTimeout = setTimeout(() => {
+        notif.classList.remove('show');
+      }, 3000);
+    }
+
+    // =====================================================
+    // INITIALISATION
+    // =====================================================
+    renderBouquets('all');
+
+    console.log('🌿 Page Bouquets - ' + bouquets.length + ' modèles disponibles');
+  </script>
+
+</body>
+</html>
